@@ -1,0 +1,20 @@
+.foodList {
+    display: flex;
+    flex-direction: row;
+}
+
+.foodBox {
+    width: 100%;
+    border: 1px solid red;
+    margin: 3%;
+}
+
+.textBox {
+    margin: 5%;
+}
+
+.bigText {
+    font-size: 18px;
+    font-style: bold;
+    margin: 5%;
+}
