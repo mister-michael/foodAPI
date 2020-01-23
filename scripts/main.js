@@ -29,4 +29,16 @@ fetch("http://localhost:8088/food")
             foodList.innerHTML += makeHTML(food)
           
         });
+        fetch("https://world.openfoodfacts.org/api/v0/product/5000169116562.json")
+                .then(response => response.json())
+                .then(productInfo => {
+                    if (productInfo.product.ingredients_text) {
+                        food.ingredients = productInfo.product.ingredients_text
+                    } else { food.ingredients = "no ingredients listed"}
+
+                    foodList.innerHTML += makeHTML(productInfo.ingredients)
+
+                    })
+
+                
     })
