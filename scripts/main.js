@@ -13,32 +13,31 @@ const makeHTML = (food) => {
     </article>    `
 }
 
-// const addHTMLToDom = (foodAsHTML) => {
-            
-//     // for (let i = 0 ; i < food.length; i++) {
-//     //     foodToMake = food[i];
-//         foodList.innerHTML += foodAsHTML
-//     }
-
+const foodFactory = ()
 
 fetch("http://localhost:8088/food")
     .then(responseFromApi => responseFromApi.json())
     .then(parsedDataFromApi => {
         console.table(parsedDataFromApi)
         parsedDataFromApi.forEach(food => {
-            foodList.innerHTML += makeHTML(food)
-          
-        });
-        fetch("https://world.openfoodfacts.org/api/v0/product/5000169116562.json")
+
+            fetch(`https://world.openfoodfacts.org/api/v0/product/${food.barcode}.json`)
                 .then(response => response.json())
                 .then(productInfo => {
-                    if (productInfo.product.ingredients_text) {
-                        food.ingredients = productInfo.product.ingredients_text
-                    } else { food.ingredients = "no ingredients listed"}
+                    console.table(productInfo)
+                    productInfo.forEach(barcode => {
+                        if (barcode.product.ingredients_text_with_allergens_en) {
+                            food.ingredients = barcode.product.ingredients_text_with_allergens_en
+                        } else {
+                            food.ingredients = "no ingredients listed"
+                        }
+                    }
+                    )
 
-                    foodList.innerHTML += makeHTML(productInfo.ingredients)
 
-                    })
+                })
+            foodList.innerHTML += makeHTML(food)
+        });
 
-                
+
     })
